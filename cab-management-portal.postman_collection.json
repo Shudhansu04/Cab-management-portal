@@ -1,0 +1,461 @@
+{
+	"info": {
+		"_postman_id": "6c4f85df-8458-4fe0-801e-b53f6530945e",
+		"name": "cab-management-portal",
+		"description": "This Postman collection contains a complete set of **RESTful backend APIs** for an **Inter-City Cab Management Portal** designed for **administrative control and cab booking operations**.\n\nThe system models real-world cab operations using a **state-driven architecture**, supports **city-based availability**, enforces **business constraints**, and provides **analytics insights** derived from historical data.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46490544",
+		"_collection_link": "https://shudhansupamdey.postman.co/workspace/74aabce3-b77d-44e6-8adf-c1b77ad6474d/collection/46490544-6c4f85df-8458-4fe0-801e-b53f6530945e?action=share&source=collection_link&creator=46490544"
+	},
+	"item": [
+		{
+			"name": "Cabs",
+			"item": [
+				{
+					"name": "Register a cab",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cabId\": \"Ertiga001\",\r\n  \"cityId\": \"6959268f5b5ddd7de5826125\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/cabs",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"cabs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all cabs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/cabs",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"cabs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cab by Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "cabId",
+									"value": "\"CAB001\"",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/cabs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cabs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update state of cab",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"state\": \"IDLE\",\r\n  \"cityId\": \"695932515b49db7e34505025\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/cabs/CAB001/state",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cabs",
+								"CAB001",
+								"state"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update cab location",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cityId\": \"695932515b49db7e34505025\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/cabs/CAB001/location",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cabs",
+								"CAB001",
+								"location"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Bulk update",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"snapshot\": [\r\n    {\r\n      \"cabId\": \"CAB001\",\r\n      \"cabState\": \"IDLE\",\r\n      \"cityId\": \"6576854785t6575\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/cabs/snapshot",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cabs",
+								"snapshot"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The **Cabs** folder contains endpoints responsible for managing cab entities within the cab-management-portal domain."
+		},
+		{
+			"name": "Cities",
+			"item": [
+				{
+					"name": "Onboard a new city",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"string\",\r\n  \"code\": \"string\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/cities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  all cities",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/cities/6959567539629fe681e29e6c",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"cities",
+								"6959567539629fe681e29e6c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get city by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			],
+			"description": "The **Cities** folder contains endpoints responsible for managing city-level configuration and metadata within the cab-management-portal domain."
+		},
+		{
+			"name": "Insights",
+			"item": [
+				{
+					"name": "Get idle time for cab",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"string\",\r\n  \"code\": \"string\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/insights/cabs/CAB001/idle-time",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"insights",
+								"cabs",
+								"CAB001",
+								"idle-time"
+							],
+							"query": [
+								{
+									"key": "cabId",
+									"value": "CAB001",
+									"disabled": true
+								},
+								{
+									"key": "startDate",
+									"value": "2026-01-03T14:24:15.010Z",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2026-01-03T14:24:15.010Z",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cab history",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get city-demand",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get snapshot for all cabs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/insights/cabs/snapshot",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"insights",
+								"cabs",
+								"snapshot"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The **Insights** folder contains endpoints that expose analytical and monitoring views over cab operations within the cab-management-portal domain."
+		},
+		{
+			"name": "Trip",
+			"item": [
+				{
+					"name": "Book a cab",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cityId\": \"6959268f5b5ddd7de5826125\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/trips",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"trips"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all trips",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cityId\": \"6959268f5b5ddd7de5826125\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/trips?status=Active&cityId=6959268f5b5ddd7de5826125&cabId=CAB001",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"trips"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "Active"
+								},
+								{
+									"key": "cityId",
+									"value": "6959268f5b5ddd7de5826125"
+								},
+								{
+									"key": "cabId",
+									"value": "CAB001"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get trip by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Complete a trip",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"endCityId\":\"6959268f5b5ddd7de5826125\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/trips/6959268f5b5ddd7de5826125/complete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"trips",
+								"6959268f5b5ddd7de5826125",
+								"complete"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "The **Trip** folder contains endpoints responsible for managing the trip lifecycle and trip-related data within the cab-management-portal domain."
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "",
+			"type": "default"
+		}
+	]
+}

@@ -21,6 +21,11 @@ app.use(express.urlencoded({ extended: true }));
 // Swagger Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+app.get('/', (req, res) => {
+  res.redirect('/api-docs')
+})
+
+
 // Routes
 app.use('/api/cabs', cabsRouter);
 app.use('/api/cities', citiesRouter);
