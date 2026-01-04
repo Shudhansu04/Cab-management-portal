@@ -126,10 +126,10 @@ npm start
 - `GET /api/cities/:id` - Get city by ID
 
 ### Trips
-- `POST /api/trips` - Book a cab
-- `GET /api/trips` - Get all trips (with filters)
+- `POST /api/trips` - Book a cab (from source to destination city)
+- `GET /api/trips` - Get all trips (with filters: status, sourceCityId, destinationCityId, cabId)
 - `GET /api/trips/:id` - Get trip by ID
-- `PUT /api/trips/:id/complete` - Complete a trip
+- `PUT /api/trips/:id/complete` - Complete a trip (cab will be set to destination city)
 
 ### Insights
 - `GET /api/insights/cabs/:cabId/idle-time` - Get cab idle time
@@ -146,10 +146,14 @@ Cabs have two states:
 ## Booking Strategy
 
 When booking a cab:
-1. System finds all IDLE cabs in the requested city
+1. System finds all IDLE cabs in the source city
 2. Selects the cab with the longest idle time
 3. If multiple cabs have the same idle time, randomly selects one
-4. Cab cannot reject/cancel a trip once assigned
+4. **IMPORTANT**: Once a cab is assigned a trip, it CANNOT be cancelled or rejected
+   - No cancel/reject endpoints exist
+   - Cab is immediately set to ON_TRIP state
+   - Trip can only be completed, never cancelled
+5. When trip is completed, cab is set to IDLE in the destination city
 
 ## Testing
 
@@ -186,11 +190,11 @@ curl -X POST http://localhost:5000/api/cabs \
   -d '{"cabId": "CAB001", "cityId": "<city_id>"}'
 ```
 
-### 3. Book a Cab
+### 3. Book a Cab (from source to destination)
 ```bash
 curl -X POST http://localhost:5000/api/trips \
   -H "Content-Type: application/json" \
-  -d '{"cityId": "<city_id>"}'
+  -d '{"sourceCityId": "<source_city_id>", "destinationCityId": "<destination_city_id>"}'
 ```
 
 ### 4. Bulk Update from Snapshot

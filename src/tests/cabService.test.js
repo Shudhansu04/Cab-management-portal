@@ -102,7 +102,7 @@ describe('CabService', () => {
       // Make CAB001 idle longer (deterministic)
       await Cab.findOneAndUpdate(
         { cabId: 'CAB001' },
-        { lastIdleAt: new Date(Date.now() - 10_000) }
+        { lastIdleTime: new Date(Date.now() - 10_000) }
       );
 
       const bestCab = await cabService.getBestAvailableCab(testCity._id);

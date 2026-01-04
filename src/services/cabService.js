@@ -1,6 +1,7 @@
 import Cab, { CabState } from '../models/cab.js';
 import City from '../models/city.js';
 import CabHistory from '../models/cabHistory.js';
+import Trip from '../models/trip.js';
 
 class CabService {
   // For registering a new cab
@@ -32,7 +33,10 @@ class CabService {
     return cab;
   }
 
-  // For updating cab state
+   
+    // Update cab state. If a cab is ON_TRIP and has an active trip, it cannot be manually
+   //  changed back to IDLE. The cab can only become IDLE by completing the trip.
+    
   async updateCabState(cabId, newState, cityId = null) {
     const cab = await Cab.findOne({ cabId });
     if (!cab) {
@@ -41,6 +45,21 @@ class CabService {
 
     if (!Object.values(CabState).includes(newState)) {
       throw new Error('Invalid cab state');
+    }
+
+    // Prevent manually changing cab from ON_TRIP to IDLE if there's an active trip
+    if (cab.state === CabState.ON_TRIP && newState === CabState.IDLE) {
+      const activeTrip = await Trip.findOne({
+        cabId: cab._id,
+        status: 'ACTIVE'
+      });
+      
+      if (activeTrip) {
+        throw new Error(
+          'Cannot change cab state from ON_TRIP to IDLE while trip is active. ' +
+          'Trips cannot be cancelled - the trip must be completed first.'
+        );
+      }
     }
 
     const previousState = cab.state;

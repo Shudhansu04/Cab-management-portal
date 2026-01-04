@@ -9,7 +9,10 @@ const router = express.Router();
  * @swagger
  * /api/trips:
  *   post:
- *     summary: Book a cab for a trip
+ *     summary: Book a cab for a trip from source to destination
+ *     description: |
+ *       Books a cab for a trip. Once a cab is assigned, it CANNOT be cancelled or rejected.
+ *       This is a core business rule - the cab must complete the trip.
  *     tags: [Trips]
  *     requestBody:
  *       required: true
@@ -18,24 +21,35 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             required:
- *               - cityId
+ *               - sourceCityId
+ *               - destinationCityId
  *             properties:
- *               cityId:
+ *               sourceCityId:
+ *                 type: string
+ *               destinationCityId:
  *                 type: string
  *     responses:
  *       201:
- *         description: Cab booked successfully
+ *         description: Cab booked successfully. Trip cannot be cancelled once assigned.
  *       400:
  *         description: No cabs available
  */
 router.post(
   '/',
   [
-    body('cityId')
-      .notEmpty().withMessage('City ID is required')
+    body('sourceCityId')
+      .notEmpty().withMessage('Source city ID is required')
       .custom((value) => {
         if (!mongoose.Types.ObjectId.isValid(value)) {
-          throw new Error('City ID must be a valid MongoDB ObjectId');
+          throw new Error('Source city ID must be a valid MongoDB ObjectId');
+        }
+        return true;
+      }),
+    body('destinationCityId')
+      .notEmpty().withMessage('Destination city ID is required')
+      .custom((value) => {
+        if (!mongoose.Types.ObjectId.isValid(value)) {
+          throw new Error('Destination city ID must be a valid MongoDB ObjectId');
         }
         return true;
       })
@@ -47,7 +61,8 @@ router.post(
         return res.status(400).json({ success: false, errors: errors.array() });
       }
 
-      const result = await tripService.bookCab(req.body.cityId);
+      const { sourceCityId, destinationCityId } = req.body;
+      const result = await tripService.bookCab(sourceCityId, destinationCityId);
       res.status(201).json({ success: true, data: result });
     } catch (error) {
       next(error);
@@ -68,7 +83,11 @@ router.post(
  *           type: string
  *           enum: [ACTIVE, COMPLETED]
  *       - in: query
- *         name: cityId
+ *         name: sourceCityId
+ *         schema:
+ *           type: string
+ *       - in: query
+ *         name: destinationCityId
  *         schema:
  *           type: string
  *       - in: query
@@ -121,6 +140,9 @@ router.get('/:id', async (req, res, next) => {
  * /api/trips/{id}/complete:
  *   put:
  *     summary: Complete a trip
+ *     description: |
+ *       Completes an active trip.Trips cannot be cancelled or rejected once booked.
+ *       The only way to end a trip is to complete it.
  *     tags: [Trips]
  *     parameters:
  *       - in: path
@@ -128,41 +150,19 @@ router.get('/:id', async (req, res, next) => {
  *         required: true
  *         schema:
  *           type: string
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - endCityId
- *             properties:
- *               endCityId:
- *                 type: string
  *     responses:
  *       200:
- *         description: Trip completed
+ *         description: Trip completed (cab will be set to destination city)
+ *       404:
+ *         description: Trip not found
+ *       400:
+ *         description: Trip already completed
  */
 router.put(
   '/:id/complete',
-  [
-    body('endCityId')
-      .notEmpty().withMessage('End city ID is required')
-      .custom((value) => {
-        if (!mongoose.Types.ObjectId.isValid(value)) {
-          throw new Error('End city ID must be a valid MongoDB ObjectId');
-        }
-        return true;
-      })
-  ],
   async (req, res, next) => {
     try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ success: false, errors: errors.array() });
-      }
-
-      const trip = await tripService.completeTrip(req.params.id, req.body.endCityId);
+      const trip = await tripService.completeTrip(req.params.id);
       res.json({ success: true, data: trip });
     } catch (error) {
       next(error);

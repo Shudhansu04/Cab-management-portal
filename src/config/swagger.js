@@ -78,7 +78,10 @@ const options = {
             cabId: {
               type: 'string'
             },
-            cityId: {
+            sourceCityId: {
+              type: 'string'
+            },
+            destinationCityId: {
               type: 'string'
             },
             startTime: {

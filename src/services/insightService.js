@@ -65,16 +65,33 @@ class InsightService {
   async getCityDemandAnalysis(startDate, endDate) {
     const trips = await Trip.find({
       bookedAt: { $gte: startDate, $lte: endDate }
-    }).populate('cityId');
+    }).populate('sourceCityId').populate('destinationCityId');
 
-    
+    // Track demand for both source and destination cities
     const cityDemand = {};
     const cityHourlyDemand = {};
 
     trips.forEach(trip => {
-      const cityId = trip.cityId?._id?.toString() || 'unknown';
-      const cityName = trip.cityId?.name || 'Unknown';
+      // Track source city demand
+      const sourceCityId = trip.sourceCityId?._id?.toString() || 'unknown';
+      const sourceCityName = trip.sourceCityId?.name || 'Unknown';
       const hour = new Date(trip.bookedAt).getHours();
+
+      if (!cityDemand[sourceCityId]) {
+        cityDemand[sourceCityId] = {
+          cityId: sourceCityId,
+          cityName: sourceCityName,
+          totalBookings: 0
+        };
+        cityHourlyDemand[sourceCityId] = {};
+      }
+
+      cityDemand[sourceCityId].totalBookings++;
+      
+      if (!cityHourlyDemand[sourceCityId][hour]) {
+        cityHourlyDemand[sourceCityId][hour] = 0;
+      }
+      cityHourlyDemand[sourceCityId][hour]++;
 
       if (!cityDemand[cityId]) {
         cityDemand[cityId] = {

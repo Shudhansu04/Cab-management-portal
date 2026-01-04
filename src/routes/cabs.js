@@ -114,6 +114,11 @@ router.get('/:cabId', async (req, res, next) => {
  * /api/cabs/{cabId}/state:
  *   put:
  *     summary: Update cab state
+ *     description: |
+ *       Updates the state of a cab. 
+ *       IMPORTANT: If a cab is ON_TRIP with an active trip, it CANNOT be manually 
+ *       changed back to IDLE. This enforces the rule that trips cannot be cancelled.
+ *       The trip must be completed first.
  *     tags: [Cabs]
  *     parameters:
  *       - in: path
@@ -138,6 +143,8 @@ router.get('/:cabId', async (req, res, next) => {
  *     responses:
  *       200:
  *         description: Cab state updated
+ *       400:
+ *         description: Cannot change state - cab has active trip (trips cannot be cancelled)
  */
 router.put(
   '/:cabId/state',
