@@ -5,8 +5,7 @@ import { CabState } from '../models/cab.js';
 
 class TripService {
   /**
-   * Book a cab for a trip from source to destination
-   * 
+   * Book a cab for a trip from source to destination.
    * Once a cab is assigned a trip, it CANNOT be cancelled or rejected.
    * 
    * @param {string} sourceCityId - Source city ID
@@ -14,6 +13,7 @@ class TripService {
    * @returns {Object} Trip and cab details
    * @throws {Error} If no cabs available in source city
    */
+  
   async bookCab(sourceCityId, destinationCityId) {
     // Find best available cab in source city
     const cab = await cabService.getBestAvailableCab(sourceCityId);
@@ -49,13 +49,14 @@ class TripService {
 
   /**
    * Complete a trip
-   * 
-   * Note: Trips can only be completed, never cancelled.
+   * Trips can only be completed, never cancelled.
    * 
    * @param {string} tripId - Trip ID to complete
    * @returns {Object} Completed trip details
    * @throws {Error} If trip not found or already completed
    */
+
+
   async completeTrip(tripId) {
     const trip = await Trip.findById(tripId)
       .populate('destinationCityId');

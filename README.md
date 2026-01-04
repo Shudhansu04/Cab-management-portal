@@ -244,6 +244,7 @@ curl "http://localhost:5000/api/insights/city-demand?startDate=2024-01-01T00:00:
 - Add more cab states (MAINTENANCE, OUT_OF_SERVICE)
 - Implement trip cancellation with penalties
 - Add driver management
+- Add pagination and aggregation pipeline to enhance the query retrieval
 - Implement real-time location tracking
 - Add payment integration
 - Implement user authentication and authorization
