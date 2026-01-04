@@ -18,6 +18,8 @@ The Swagger UI provides interactive API documentation where you can test all end
 -  Onboard cities
 -  Change cab location (city)
 -  Change cab state (IDLE, ON_TRIP)
+-  Book a cab for trip between source and destination with assumption:
+  - Cab cannot be rejected or cancelled in between trip 
 -  Book cabs with intelligent assignment:
   - Finds cab with longest idle time
   - Randomly assigns in case of tie
