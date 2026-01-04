@@ -5,13 +5,12 @@
 		"description": "This Postman collection contains a complete set of **RESTful backend APIs** for an **Inter-City Cab Management Portal** designed for **administrative control and cab booking operations**.\n\nThe system models real-world cab operations using a **state-driven architecture**, supports **city-based availability**, enforces **business constraints**, and provides **analytics insights** derived from historical data.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "46490544",
-		"_collection_link": "https://shudhansupamdey.postman.co/workspace/74aabce3-b77d-44e6-8adf-c1b77ad6474d/collection/46490544-6c4f85df-8458-4fe0-801e-b53f6530945e?action=share&source=collection_link&creator=46490544"
-	},
-	"item": [
-		{
-			"name": "Cabs",
-			"item": [
-				{
+		"_collection_link": "https://documenter.getpostman.com/view/46490544/2sBXVcmCtB",
+		"item": [
+			{
+				"name": "Cabs",
+				"item": [
+					{
 					"name": "Register a cab",
 					"request": {
 						"method": "POST",
