@@ -7,4 +7,6 @@ build/
 coverage/
 .vscode/
 .idea/
+src/tests/setup.js
+
 
