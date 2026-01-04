@@ -6,7 +6,7 @@ An inter-city cab management portal API built with Node.js, Express, and MongoDB
 
 - Live Link: [click Here](https://cab-management-portal-qedf.onrender.com/api-docs)
 - Swagger Docs URL: [Click Here](https://cab-management-portal-qedf.onrender.com/api-docs)
-- Postman Documentation available :- [Click Here](https://shudhansupamdey.postman.co/workspace/74aabce3-b77d-44e6-8adf-c1b77ad6474d/collection/46490544-6c4f85df-8458-4fe0-801e-b53f6530945e?action=share&source=collection_link&creator=46490544)
+- Postman Documentation available :- [Click Here](https://documenter.getpostman.com/view/46490544/2sBXVcmCtB)
 
 The Swagger UI provides interactive API documentation where you can test all endpoints directly.
 
@@ -244,4 +244,5 @@ curl "http://localhost:5000/api/insights/city-demand?startDate=2024-01-01T00:00:
 - Add payment integration
 - Implement user authentication and authorization
 - Add more advanced analytics and reporting
+- Add Authentication and Authorization
 
