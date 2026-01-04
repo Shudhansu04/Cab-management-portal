@@ -14,19 +14,27 @@ The Swagger UI provides interactive API documentation where you can test all end
 ## Features
 
 ### Core Features
--  Register cabs
--  Onboard cities
--  Change cab location (city)
--  Change cab state (IDLE, ON_TRIP)
--  Book a cab for trip between source and destination with assumption:
-  - Cab cannot be rejected or cancelled in between trip 
--  Book cabs with intelligent assignment:
-  - Finds cab with longest idle time
-  - Randomly assigns in case of tie
--  Bulk update cabs from snapshot
--  Cab idle time analysis for given duration
--  Cab history tracking (all state changes)
--  City demand analysis (high demand cities and peak hours)
+
+#### Cab Management
+- Register cabs
+- Change cab location (city)
+- Change cab state (IDLE, ON_TRIP)
+
+#### City Management
+- Onboard cities
+
+#### Booking & Allocation
+- Book a cab for trips between source and destination
+- No cancellation or rejection once a trip is assigned
+- Intelligent cab assignment:
+  - Longest idle cab is preferred
+  - Random assignment in case of a tie
+
+#### Analytics & Insights
+- Bulk cab updates via snapshot input
+- Cab idle time analysis for a given duration
+- Cab history tracking (state transitions)
+- City demand analysis (high-demand cities and peak hours)
 
 ## Tech Stack
 
